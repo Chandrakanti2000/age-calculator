@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator Project</title>
+ <style>
+   
+   /* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Overall body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Age calculator container styling */
+.age-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Age calculator header styling */
+.age-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Styling for the input section */
+.age-input label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Styling for the day, month, and year select boxes */
+.age-select {
+    padding: 10px;
+    font-size: 16px;
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+
+.age-select:focus {
+    border-color: #007BFF;
+}
+
+/* Styling for the calculate button */
+.age-button {
+    margin-top: 20px;
+}
+
+.calculate-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calculate-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for the result section */
+.age-result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+    padding: 10px;
+    background-color: #f1f3f8;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+  </style>
+</head>
+<body>
+
+    <div class="age-container">
+        <div class="age-header">
+            Age Calculator 
+        </div>
+        <div class="age-input">
+            <label>
+                Select your Birth Date:
+            </label>
+            <div>
+                <select class="age-select" id="day">
+                    <option value="" disabled selected>Day</option>
+                </select>
+                <select class="age-select" id="month">
+                    <option value="" disabled selected>Month</option>
+                </select>
+                <select class="age-select" id="year">
+                    <option value="" disabled selected>Year</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="age-button">
+            <button class="calculate-btn">
+                Calculate Age
+            </button>
+        </div>
+
+        <div class="age-result">
+            Your age is: 
+        </div>
+    </div>
+    <script>
+      const daySelect = document.getElementById('day');
+      const monthSelect = document.getElementById('month');
+      const yearSelect = document.getElementById('year');
+      const calculateBtn = document.querySelector(".calculate-btn");
+      const ageResult = document.querySelector(".age-result");
+
+      // Populate day, month, and year dropdowns
+      for (let i = 1; i <= 31; i++) {
+          let option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          daySelect.appendChild(option);
+      }
+
+      for (let i = 1; i <= 12; i++) {
+          let option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          monthSelect.appendChild(option);
+      }
+
+      const currentYear = new Date().getFullYear();
+      for (let i = currentYear; i >= 1900; i--) {
+          let option = document.createElement('option');
+          option.value = i;
+          option.textContent = i;
+          yearSelect.appendChild(option);
+      }
+
+      // Prevent future dates
+      calculateBtn.addEventListener("click", () => {
+          const day = daySelect.value;
+          const month = monthSelect.value;
+          const year = yearSelect.value;
+
+          if (!day || !month || !year) {
+              alert("Please select a valid date.");
+              return;
+          }
+
+          const dob = new Date(year, month - 1, day);
+          const now = new Date();
+
+          if (dob > now) {
+              alert("You cannot select a future date.");
+              return;
+          }
+
+          const age = now.getFullYear() - dob.getFullYear();
+          ageResult.innerHTML = `Your age is ${age}`;
+      });
+    </script>
+</body>
+</html>
